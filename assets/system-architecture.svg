@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="860" viewBox="0 0 1600 860" role="img" aria-labelledby="title desc">
+  <title id="title">车载平衡滚球运动控制系统架构图</title>
+  <desc id="desc">系统由车体循迹控制链路和滚球平衡控制链路组成。车体链路使用八路红外、编码器、PD 和 PI 控制；滚球链路使用 K230 视觉、UART、PID 和步进电机。</desc>
+
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .title { font: 700 30px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #0f172a; }
+      .lane { font: 700 22px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #334155; }
+      .box-title { font: 700 20px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #0f172a; text-anchor: middle; }
+      .box-sub { font: 400 16px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #475569; text-anchor: middle; }
+      .label { font: 600 15px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #475569; text-anchor: middle; }
+      .note { font: 400 15px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="860" rx="24" fill="#f8fafc"/>
+  <text x="800" y="52" class="title" text-anchor="middle">双 MCU 协同控制架构</text>
+
+  <!-- Vehicle control lane -->
+  <rect x="34" y="82" width="1532" height="300" rx="20" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+  <text x="64" y="120" class="lane">🚘 车体循迹控制板</text>
+
+  <rect x="70" y="178" width="190" height="96" rx="14" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+  <text x="165" y="215" class="box-title">八路数字红外</text>
+  <text x="165" y="242" class="box-sub">I2C0 · 黑线状态</text>
+
+  <rect x="70" y="292" width="190" height="62" rx="14" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
+  <text x="165" y="330" class="box-title">左右轮 AB 编码器</text>
+
+  <rect x="334" y="208" width="230" height="106" rx="14" fill="#bfdbfe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="449" y="248" class="box-title">MSPM0G3507</text>
+  <text x="449" y="276" class="box-sub">循迹控制板</text>
+
+  <rect x="638" y="208" width="220" height="106" rx="14" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+  <text x="748" y="248" class="box-title">循迹 PD 外环</text>
+  <text x="748" y="276" class="box-sub">加权偏差 → 差速</text>
+
+  <rect x="932" y="208" width="220" height="106" rx="14" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+  <text x="1042" y="248" class="box-title">双轮速度 PI 内环</text>
+  <text x="1042" y="276" class="box-sub">前馈 + 积分限幅</text>
+
+  <rect x="1226" y="208" width="150" height="106" rx="14" fill="#bfdbfe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1301" y="248" class="box-title">TB6612</text>
+  <text x="1301" y="276" class="box-sub">双路驱动</text>
+
+  <rect x="1430" y="208" width="100" height="106" rx="14" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+  <text x="1480" y="248" class="box-title">MG513X</text>
+  <text x="1480" y="276" class="box-sub">双电机</text>
+
+  <path d="M 260 226 L 334 246" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <path d="M 260 323 L 334 286" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <path d="M 564 261 L 638 261" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <path d="M 858 261 L 932 261" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <path d="M 1152 261 L 1226 261" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <path d="M 1376 261 L 1430 261" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <path d="M 1480 314 C 1480 360, 620 364, 449 314" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow-gray)"/>
+  <text x="980" y="356" class="label">编码器反馈：测速、里程与闭环校正</text>
+
+  <!-- Ball balance lane -->
+  <rect x="34" y="420" width="1532" height="300" rx="20" fill="#faf5ff" stroke="#ddd6fe" stroke-width="2"/>
+  <text x="64" y="458" class="lane">⚖️ 滚球平衡控制链路</text>
+
+  <rect x="70" y="526" width="190" height="106" rx="14" fill="#ede9fe" stroke="#a78bfa" stroke-width="2"/>
+  <text x="165" y="566" class="box-title">摄像头 / K230</text>
+  <text x="165" y="594" class="box-sub">图像采集</text>
+
+  <rect x="334" y="526" width="230" height="106" rx="14" fill="#ddd6fe" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="449" y="566" class="box-title">视觉定位</text>
+  <text x="449" y="594" class="box-sub">ROI · 检测 · 三点投影</text>
+
+  <rect x="638" y="526" width="180" height="106" rx="14" fill="#ede9fe" stroke="#a78bfa" stroke-width="2"/>
+  <text x="728" y="566" class="box-title">UART</text>
+  <text x="728" y="594" class="box-sub">115200 · 8 字节帧</text>
+
+  <rect x="892" y="526" width="230" height="106" rx="14" fill="#ddd6fe" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="1007" y="566" class="box-title">MSPM0G3507</text>
+  <text x="1007" y="594" class="box-sub">滚球控制板</text>
+
+  <rect x="1196" y="526" width="180" height="106" rx="14" fill="#ede9fe" stroke="#a78bfa" stroke-width="2"/>
+  <text x="1286" y="566" class="box-title">位置-速度 PID</text>
+  <text x="1286" y="594" class="box-sub">量化 + 斜坡限制</text>
+
+  <rect x="1430" y="526" width="100" height="106" rx="14" fill="#ddd6fe" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="1480" y="566" class="box-title">42 步进</text>
+  <text x="1480" y="594" class="box-sub">STEP/DIR</text>
+
+  <path d="M 260 579 L 334 579" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrow-purple)"/>
+  <path d="M 564 579 L 638 579" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrow-purple)"/>
+  <path d="M 818 579 L 892 579" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrow-purple)"/>
+  <path d="M 1122 579 L 1196 579" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrow-purple)"/>
+  <path d="M 1376 579 L 1430 579" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrow-purple)"/>
+  <path d="M 1480 632 C 1480 682, 760 696, 1007 632" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow-gray)"/>
+  <text x="1100" y="690" class="label">步进角度改变摆杆姿态，形成钢球位置反馈</text>
+
+  <line x1="64" y1="770" x2="1536" y2="770" stroke="#cbd5e1" stroke-width="2"/>
+  <circle cx="84" cy="810" r="7" fill="#2563eb"/>
+  <text x="102" y="816" class="note">车体控制数据流</text>
+  <circle cx="300" cy="810" r="7" fill="#7c3aed"/>
+  <text x="318" y="816" class="note">视觉/滚球控制数据流</text>
+  <line x1="560" y1="810" x2="610" y2="810" stroke="#64748b" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="628" y="816" class="note">反馈路径</text>
+  <text x="1536" y="816" class="note" text-anchor="end">MSPM0G3507 × 2 · K230 × 1</text>
+</svg>

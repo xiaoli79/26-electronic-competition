@@ -62,22 +62,16 @@
 
 ## 🧭 系统架构
 
-```mermaid
-flowchart LR
-    IR["八路数字红外<br/>I2C0"] --> CAR["MSPM0G3507<br/>车体循迹板"]
-    ENC["左右轮 AB 相编码器"] --> CAR
-    CAR --> PD["循迹 PD 外环<br/>加权偏差 → 差速"]
-    PD --> PI["左右轮独立速度 PI<br/>前馈 + 积分限幅"]
-    PI --> TB["TB6612"]
-    TB --> WHEEL["MG513X P28<br/>双直流电机"]
-    WHEEL --> ENC
+<p align="center">
+  <img src="assets/system-architecture.svg" alt="车载平衡滚球运动控制系统架构图" width="100%">
+</p>
 
-    CAM["摄像头 / K230"] --> AI["ROI + AnchorBaseDet<br/>三点投影标定 + 低通滤波"]
-    AI -->|UART 115200| BALL["MSPM0G3507<br/>滚球控制板"]
-    BALL --> PID["位置-速度 PID<br/>角度量化 + 斜坡限制"]
-    PID --> STEP["42 步进电机<br/>STEP / DIR"]
-    STEP --> PIPE["摆杆姿态"]
-```
+> 架构图使用仓库内静态 SVG，不依赖 Mermaid 渲染；车体和滚球两条控制链路相互独立，UART 只传递钢球一维位置。
+
+| 控制链路 | 数据流 |
+| --- | --- |
+| 🚘 车体循迹 | 八路红外 → 加权偏差/PD → 左右轮目标速度 → 编码器 PI → TB6612 → 双直流电机 |
+| ⚖️ 滚球平衡 | 摄像头/K230 → ROI 与一维标定 → UART → 位置-速度 PID → STEP/DIR → 摆杆姿态 |
 
 ## 🎯 赛题任务与软件任务
 
@@ -216,6 +210,8 @@ PWM = PWM_static + Kff · v_ref + Kp · (v_ref - v_actual) + Ki · ∫e dt
 │   │   └── empty.syscfg
 │   └── vision-code/
 │       └── det_video_1_2_2_3.py       # K230 MicroPython 视觉程序
+├── assets/
+│   └── system-architecture.svg        # 静态系统架构图
 ├── PCB板/                             # EPro PCB 工程
 ├── 模块相关资料/                      # TB6612、舵机等资料
 ├── 技术报告/371021001_s.pdf            # 项目技术报告
@@ -326,10 +322,10 @@ AA 55 FOUND POS_L POS_H 00 00 CHECKSUM
 
 - [赛题原文](H题_车载平衡滚球运动控制系统.pdf)
 - [技术报告](技术报告/371021001_s.pdf)
+- [系统架构图（SVG）](assets/system-architecture.svg)
 - [车体循迹 CCS 工程](code/2026-game/)
 - [步进/滚球 CCS 工程](code/stepMotor-code/Motor/)
 - [K230 视觉脚本](code/vision-code/det_video_1_2_2_3.py)
 - [车体模块引脚定义](code/2026-game/模块引脚定义.md)
 - [PCB 工程](PCB板/)
 - [模块相关资料](模块相关资料/)
-

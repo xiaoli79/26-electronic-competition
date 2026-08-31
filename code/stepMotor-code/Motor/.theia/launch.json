@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "driver_yuntai",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "driver_yuntai",
+                "resourceId": "/driver_yuntai/Debug"
+            }
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "24H_4",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "24H_4",
+                "resourceId": "/24H_4/Debug"
+            }
+        },
+        {
+            "name": "2026-extend",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "2026-extend",
+                "resourceId": "/2026-extend/Debug"
+            }
+        }
+    ]
+}
